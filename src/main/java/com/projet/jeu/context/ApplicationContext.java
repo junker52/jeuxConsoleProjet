@@ -1,21 +1,27 @@
 package com.projet.jeu.context;
 
+import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.Properties;
 
 import org.apache.log4j.BasicConfigurator;
 
 import com.projet.jeu.jeux.Jeu;
 import com.projet.jeu.jeux.JeuMode;
+import com.projet.jeu.jeux.JeuType;
 
 public class ApplicationContext {
 	
+	private static BufferedReader lecteur = new BufferedReader(new InputStreamReader(System.in));
 	private JeuMode jeuMode;
+	private JeuType jeuType;
 	private Jeu jeu;
 	private int nombreEssais;
 	private int nombreCases;
 	private boolean modeDevelop;
+	private char exitControl = 'N';
 	
 	//Constructor a rellenar
 	public ApplicationContext() {
@@ -45,6 +51,20 @@ public class ApplicationContext {
 			e.printStackTrace();
 			
 		}
+	}
+	
+	//Methode pour gerer la sortie du jeu
+	public char gererSortie() {
+		System.out.println("Voulez-vous quitter le jeu? (O/N)");
+		char resp;
+		try {
+			resp = lecteur.readLine().charAt(0);
+		} catch (IOException e) {
+			System.out.println("Erreur de saissie. Reesayez seulement avec O ou N");
+			resp = exitControl;
+		}
+		return resp;
+		
 	}
 
 	//Getters et Setters
@@ -76,6 +96,35 @@ public class ApplicationContext {
 	public boolean isModeDevelop() {
 		return modeDevelop;
 	}
+
+	public static BufferedReader getLecteur() {
+		return lecteur;
+	}
+
+	public static void setLecteur(BufferedReader lecteur) {
+		ApplicationContext.lecteur = lecteur;
+	}
+
+	public JeuType getJeuType() {
+		return jeuType;
+	}
+
+	public void setJeuType(JeuType jeuType) {
+		this.jeuType = jeuType;
+	}
+
+	public char getExitControl() {
+		return exitControl;
+	}
+
+	public void setExitControl(char exitControl) {
+		this.exitControl = exitControl;
+	}
+	
+	
+	
+	
+	
 	
 	
 

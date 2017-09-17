@@ -4,6 +4,10 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+import com.projet.jeu.context.ApplicationContext;
+import com.projet.jeu.jeux.JeuMode;
+import com.projet.jeu.jeux.JeuType;
+
 /*<p>
  * Classe en charge de la gestion des menus dans le jeu.
  *</p> 
@@ -13,10 +17,28 @@ public class Menu {
 	
 	private short menu_option;
 	private short submenu_option;
-	private BufferedReader lecteur = new BufferedReader(new InputStreamReader(System.in)); 
+	private ApplicationContext applicationContext;
 	
 	//Constructor par defaut
-	public Menu() {}
+	public Menu(ApplicationContext aplicationContext) {
+		this.applicationContext = aplicationContext;
+		this.menu_option = debutMenu();
+		setApplicationJeuType();
+		this.submenu_option = submenu();
+		switch (submenu_option) {
+		case 1:
+			aplicationContext.setJeuMode(JeuMode.CHALLENGE);
+			break;
+		case 2:
+			aplicationContext.setJeuMode(JeuMode.DEFENSEUR);
+			break;
+			
+		case 3:
+			aplicationContext.setJeuMode(JeuMode.DUEL);
+			break;
+		}
+		
+	}
 	
 	//Gestion des menus
 	
@@ -33,7 +55,7 @@ public class Menu {
 		System.out.println("1 - Recherche +/-");
 		System.out.println("2 - Mastermind");
 		try {
-			reponse = Short.valueOf(lecteur.readLine());			
+			reponse = Short.valueOf(ApplicationContext.getLecteur().readLine());			
 		} catch (Exception e) {
 			//Erreur de format des nombres
 			System.out.println("Erreur de saisie. Choisisez entre \" 1\" et \" 2\" svp:");
@@ -44,7 +66,6 @@ public class Menu {
 			System.out.println("Erreur de saisie. Choisisez entre \" 1\" et \" 2\" svp:");
 			reponse=this.debutMenu();
 		}
-		this.setMenu_option(reponse);
 		return reponse; 
 	}
 	
@@ -62,7 +83,7 @@ public class Menu {
 		System.out.println("3 - Mode Duel");
 		
 		try {
-			reponse = Short.valueOf(lecteur.readLine());			
+			reponse = Short.valueOf(ApplicationContext.getLecteur().readLine());			
 		} catch (Exception e) {
 			//Erreur de format des nombres
 			System.out.println("Erreur de saisie. Choisisez entre \" 1\", \" 2\" et \" 3\" svp:");
@@ -73,7 +94,6 @@ public class Menu {
 			System.out.println("Erreur de saisie. Choisisez entre \" 1\", \" 2\" et \" 3\"  svp:");
 			reponse=this.submenu();
 		}
-		this.setSubmenu_option(reponse);
 		return reponse; 
 	}
 	
@@ -95,13 +115,24 @@ public class Menu {
 		this.submenu_option = submenu_option;
 	}
 
-	public BufferedReader getLecteur() {
-		return lecteur;
+	public ApplicationContext getApplicationContext() {
+		return applicationContext;
 	}
 
-	public void setLecteur(BufferedReader lecteur) {
-		this.lecteur = lecteur;
+	public void setApplicationContext(ApplicationContext applicationContext) {
+		this.applicationContext = applicationContext;
 	}
+
+	public void setApplicationJeuType() {
+		if (this.menu_option == 1) {
+			applicationContext.setJeuType(JeuType.RECHERCHE); 
+		} else {
+			applicationContext.setJeuType(JeuType.MASTEMIND); 
+		}
+	}
+	
+	
+	
 	
 	
 	
