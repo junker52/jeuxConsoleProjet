@@ -9,8 +9,7 @@ public abstract class Jeu {
 	 
 	protected byte jeu_solution[] = new byte[4];
 	protected byte jeu_essai[] = new byte[4];
-	//Usar ENUM
-	protected String jeu_mode;
+	protected JeuMode jeu_mode;
 	
 
 	//Getters et Setters
@@ -26,6 +25,15 @@ public abstract class Jeu {
 	public void setJeu_essai(byte[] jeu_essai) {
 		this.jeu_essai = jeu_essai;
 	}
+	public JeuMode getJeu_mode() {
+		return jeu_mode;
+	}
+	public void setJeu_mode(JeuMode jeu_mode) {
+		this.jeu_mode = jeu_mode;
+	}
+	
+	
+	
 	
 	
 	
