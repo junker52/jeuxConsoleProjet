@@ -1,5 +1,7 @@
 package com.projet.jeu.jeux;
 
+import com.projet.jeu.context.ApplicationContext;
+
 /*
  * Classe abstraite de base pour creer les jeux Recherche et Mastermind
  * 
@@ -10,8 +12,11 @@ public abstract class Jeu {
 	protected byte jeu_solution[] = new byte[4];
 	protected byte jeu_essai[] = new byte[4];
 	protected JeuMode jeu_mode;
+	protected ApplicationContext applicationContext;
 	
-
+	public Jeu() {
+		
+	}
 	//Getters et Setters
 	public byte[] getJeu_solution() {
 		return jeu_solution;
@@ -31,6 +36,13 @@ public abstract class Jeu {
 	public void setJeu_mode(JeuMode jeu_mode) {
 		this.jeu_mode = jeu_mode;
 	}
+	public ApplicationContext getApplicationContext() {
+		return applicationContext;
+	}
+	public void setApplicationContext(ApplicationContext applicationContext) {
+		this.applicationContext = applicationContext;
+	}
+	
 	
 	
 	
