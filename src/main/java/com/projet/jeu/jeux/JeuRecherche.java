@@ -5,6 +5,12 @@ import java.util.ArrayList;
 
 import com.projet.jeu.context.ApplicationContext;
 
+/*
+ * Classe permettant de gerer le jeu recherche +/-
+ * 
+ * @author junker52
+ */
+
 public class JeuRecherche extends Jeu {
 
 	private String evaluationJoueur=" ";
@@ -12,6 +18,12 @@ public class JeuRecherche extends Jeu {
 	protected ArrayList<Integer> combSecreteJoueur = new ArrayList<Integer>();
 	protected ArrayList<Integer> combEssaiJoueur = new ArrayList<Integer>();
 
+	/*
+	 * <p> Constructor pour lancer le jeu directement </p>
+	 * 
+	 * @param a
+	 * 		L'objet ApplicationContext de l'application.
+	 */
 	public JeuRecherche(ApplicationContext a) {
 		super(a);
 		switch (applicationContext.getJeuMode()) {
@@ -27,6 +39,10 @@ public class JeuRecherche extends Jeu {
 		}
 	}
 
+	/*
+	 * <p> Methode pour lancer le jeu recherche en mode Challenger </p>
+	 * 
+	 */
 	@Override
 	void lancerJeuChallenge() {
 		System.out.println("Bienvenu au Recherche +//- || Mode Challenger");
@@ -48,7 +64,11 @@ public class JeuRecherche extends Jeu {
 		}
 
 	}
-
+	
+	/*
+	 * <p> Methode pour lancer le jeu recherche en mode Defenseur </p>
+	 * 
+	 */
 	@Override
 	void lancerJeuDefenseur() {
 		super.combEssai = null;
@@ -74,6 +94,10 @@ public class JeuRecherche extends Jeu {
 
 	}
 
+	/*
+	 * <p> Methode pour lancer le jeu recherche en mode Duel </p>
+	 * 
+	 */
 	@Override
 	void lancerJeuDuel() {
 		System.out.println("Bienvenu au Recherche +//-  || Mode Duel");
@@ -134,6 +158,18 @@ public class JeuRecherche extends Jeu {
 	}
 
 
+	/*
+	 * <p> Methode en charge de genere un String piste en faisant la comparaison entre la combinaison saissie 
+	 *  et la combinaison secrete </p>
+	 *  
+	 *  @return La piste en string
+	 *  
+	 *  @param combSecrete
+	 *  	ArrayList contenent la combinaison secrete du jeu
+	 *  @param combEssai
+	 *  	ArrayList contenent la combinaison saisie
+	 * 
+	 */
 	@Override
 	String evaluateCombinaison(ArrayList<Integer> combSecrete, ArrayList<Integer> combEssai) {
 		StringBuffer result = new StringBuffer();
@@ -149,6 +185,11 @@ public class JeuRecherche extends Jeu {
 		return result.toString();
 	}
 	
+	/*
+	 * <p>Methode de input lorsque le joueur doit lui saisir la piste (il agit comme defenseur) </p>
+	 * @return La piste saisie 
+	 * @see com.projet.jeu.jeux.Jeu#evaluateCombinaisonJoueur()
+	 */
 	@Override
 	String evaluateCombinaisonJoueur() {
 		System.out.println("Evaluez la combinaison proposée (>,<,=): ");
@@ -174,6 +215,13 @@ public class JeuRecherche extends Jeu {
 		return respo;
 	}
 
+	/*
+	 * <p>En base à une piste, cette methode s'occupe de transforme la piste pour obtenir une nouvelle combinaison d'essai </p>
+	 * 
+	 * @return Un nouveau essai
+	 * @param evaluationJoueur 
+	 * 		La piste obtenu lors de l'essai precedent
+	 */
 	public ArrayList<Integer> penserCombi(String evaluationJoueur) {
 		ArrayList<Integer> combi = new ArrayList<Integer>();
 		for (int i = 0; i < applicationContext.getNombreCases(); i++) {

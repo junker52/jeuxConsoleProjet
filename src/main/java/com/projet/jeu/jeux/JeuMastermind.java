@@ -28,7 +28,7 @@ public class JeuMastermind extends Jeu {
 		// TODO Auto-generated method stub
 		
 	}
-
+	
 	@Override
 	void lancerJeuDuel() {
 		// TODO Auto-generated method stub

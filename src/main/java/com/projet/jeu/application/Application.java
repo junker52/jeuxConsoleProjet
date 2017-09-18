@@ -29,5 +29,5 @@ public class Application {
 		} while(applicationContext.getExitControl() != 'O' && applicationContext.getExitControl() != 'o');
 
 	}
-
+	
 }
