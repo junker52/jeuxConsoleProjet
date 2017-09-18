@@ -11,8 +11,8 @@ import com.projet.jeu.context.ApplicationContext;
  */
 public abstract class Jeu {
 
-	protected ArrayList<Integer> combSecrete;
-	protected ArrayList<Integer> combEssai;
+	protected ArrayList<Integer> combSecrete = new ArrayList<Integer>();
+	protected ArrayList<Integer> combEssai = new ArrayList<Integer>();
 	protected ApplicationContext applicationContext;
 
 	public Jeu(ApplicationContext applicationContext) {
@@ -39,10 +39,10 @@ public abstract class Jeu {
 		return combinaison;
 	}
 
-	public void afficheSolution() {
+	public void afficheSolution(ArrayList<Integer> array) {
 		// Gestion du mode developpeur
 		if (applicationContext.isModeDevelop()) {
-			System.out.println(this.combSecrete.toString() + " \n");
+			System.out.println(array.toString() + " \n");
 		}
 	}
 
@@ -65,7 +65,7 @@ public abstract class Jeu {
 
 	}
 
-	public boolean isSecretCobination(ArrayList<Integer> combinasion) {
+	public boolean isSecretCobination(ArrayList<Integer> combinasion, ArrayList<Integer> combSecrete) {
 		boolean winner = false;
 		if (combSecrete.equals(combinasion)) {
 			winner = true;
@@ -96,7 +96,7 @@ public abstract class Jeu {
 
 	abstract void lancerJeuDuel();
 
-	abstract String evaluateCombinaison();
+	abstract String evaluateCombinaison(ArrayList<Integer> combSecrete, ArrayList<Integer> combEssai);
 
 	abstract String evaluateCombinaisonJoueur();
 

@@ -1,5 +1,7 @@
 package com.projet.jeu.jeux;
 
+import java.util.ArrayList;
+
 import com.projet.jeu.context.ApplicationContext;
 
 public class JeuMastermind extends Jeu {
@@ -16,7 +18,7 @@ public class JeuMastermind extends Jeu {
 	}
 
 	@Override
-	String evaluateCombinaison() {
+	String evaluateCombinaison(ArrayList<Integer> combSecrete, ArrayList<Integer> combEssai) {
 		// TODO Auto-generated method stub
 		return null;
 	}

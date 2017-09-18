@@ -16,6 +16,7 @@ public class Application {
 		//Test
 		ApplicationContext applicationContext = new ApplicationContext();
 		do {
+		applicationContext.setJeu(null);
 		Menu menu = new Menu(applicationContext);
 		applicationContext = menu.getApplicationContext();
 		if (applicationContext.getJeuType() == JeuType.MASTEMIND) {
