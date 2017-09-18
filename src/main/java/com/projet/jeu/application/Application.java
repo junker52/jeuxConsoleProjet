@@ -13,6 +13,7 @@ public class Application {
 
 	public static void main(String[] args) {
 
+		//Test
 		ApplicationContext applicationContext = new ApplicationContext();
 		do {
 		Menu menu = new Menu(applicationContext);
@@ -21,11 +22,10 @@ public class Application {
 			System.out.println("Lanzo Mastermind");
 			System.out.println(applicationContext.getJeuMode());
 		} else if(applicationContext.getJeuType() == JeuType.RECHERCHE) {
-			System.out.println("Lanzo Recherce");
-			System.out.println(applicationContext.getJeuMode());
 			applicationContext.setJeu(new JeuRecherche(applicationContext));
 		}
-		} while(applicationContext.gererSortie() != 'O' && applicationContext.gererSortie() != 'o');
+		applicationContext.setExitControl(applicationContext.gererSortie());
+		} while(applicationContext.getExitControl() != 'O' && applicationContext.getExitControl() != 'o');
 
 	}
 
