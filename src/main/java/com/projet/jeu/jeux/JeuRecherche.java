@@ -42,6 +42,9 @@ public class JeuRecherche extends Jeu {
 				System.out.println("Bravo! Vous avez trouvé la combinaison secrete en " + (i + 1) + " essais");
 				break;
 			}
+			if (i >= applicationContext.getNombreEssais() - 1) {
+				System.out.println("MEC! Il n'y a plus d'essais possibles!");
+			}
 		}
 
 	}
@@ -64,6 +67,9 @@ public class JeuRecherche extends Jeu {
 			this.evaluationJoueur = evaluateCombinaisonJoueur();
 			System.out.println("Piste: " + this.evaluationJoueur);
 			super.combEssai = this.penserCombi(evaluationJoueur);
+			if (i >= applicationContext.getNombreEssais() - 1) {
+				System.out.println("MEC! Il n'y a plus d'essais possibles!");
+			}
 		}
 
 	}
@@ -114,6 +120,12 @@ public class JeuRecherche extends Jeu {
 			this.evaluationJoueur = evaluateCombinaison(combSecrete, combEssaiJoueur);
 			System.out.println("Piste: " + this.evaluationJoueur);		
 			
+			//Verif des essais
+			if (i_comput >= applicationContext.getNombreEssais() - 1) {
+				System.out.println("BRAVO! L'ordinateur n'a plus d'essais!");
+			} else if (i_joueur >= applicationContext.getNombreEssais() -1) {
+				System.out.println("MEC! Il n'y a plus d'essais possibles!L'ordi gagne!");
+			}			
 			
 		} while (i_comput < applicationContext.getNombreEssais() ||
 				i_joueur < applicationContext.getNombreEssais());
