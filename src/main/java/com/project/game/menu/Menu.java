@@ -1,12 +1,12 @@
-package com.projet.jeu.menu;
+package com.project.game.menu;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-import com.projet.jeu.context.ApplicationContext;
-import com.projet.jeu.jeux.JeuMode;
-import com.projet.jeu.jeux.JeuType;
+import com.project.game.context.ApplicationContext;
+import com.project.game.games.GameMode;
+import com.project.game.games.GameType;
 
 /*<p>
  * Classe en charge de la gestion des menus dans le jeu.
@@ -27,14 +27,14 @@ public class Menu {
 		this.submenu_option = submenu();
 		switch (submenu_option) {
 		case 1:
-			aplicationContext.setJeuMode(JeuMode.CHALLENGE);
+			aplicationContext.setGameMode(GameMode.CHALLENGE);
 			break;
 		case 2:
-			aplicationContext.setJeuMode(JeuMode.DEFENSEUR);
+			aplicationContext.setGameMode(GameMode.DEFENSE);
 			break;
 			
 		case 3:
-			aplicationContext.setJeuMode(JeuMode.DUEL);
+			aplicationContext.setGameMode(GameMode.DUEL);
 			break;
 		}
 		
@@ -49,21 +49,21 @@ public class Menu {
 	 */
 	public short debutMenu() {
 		short reponse;
-		System.out.println("Bienvenu au JeuProjet");
+		System.out.println("Welcome to GameProject");
 		System.out.println("======================");
-		System.out.println("Faites votre choix:");
+		System.out.println("Choose an option, please:");
 		System.out.println("1 - Recherche +/-");
 		System.out.println("2 - Mastermind");
 		try {
-			reponse = Short.valueOf(ApplicationContext.getLecteur().readLine());			
+			reponse = Short.valueOf(ApplicationContext.getReader().readLine());			
 		} catch (Exception e) {
 			//Erreur de format des nombres
-			System.out.println("Erreur de saisie. Choisisez entre \" 1\" et \" 2\" svp:");
+			System.out.println("Input error. Choose between \" 1\" and \" 2\" please:");
 			reponse=this.debutMenu();
 		}		
 		if(reponse != 1 && reponse != 2) {
 			//Si le choix est hors du rang 
-			System.out.println("Erreur de saisie. Choisisez entre \" 1\" et \" 2\" svp:");
+			System.out.println("Input error. Choose between \" 1\" and \" 2\" please:");
 			reponse=this.debutMenu();
 		}
 		return reponse; 
@@ -76,22 +76,22 @@ public class Menu {
 	 */
 	public short submenu() {
 		short reponse;
-		System.out.println("Choisissez le mode de jeu:");
+		System.out.println("Choose the game mode, please: ");
 		System.out.println("======================");
 		System.out.println("1 - Mode Chanllenger");
 		System.out.println("2 - Mode Defenseur +/-");
 		System.out.println("3 - Mode Duel");
 		
 		try {
-			reponse = Short.valueOf(ApplicationContext.getLecteur().readLine());			
+			reponse = Short.valueOf(ApplicationContext.getReader().readLine());			
 		} catch (Exception e) {
 			//Erreur de format des nombres
-			System.out.println("Erreur de saisie. Choisisez entre \" 1\", \" 2\" et \" 3\" svp:");
+			System.out.println("Input error. Choose between \" 1\", \" 2\" and \" 3\" please:");
 			reponse=this.submenu();
 		}		
 		if(reponse != 1 && reponse != 2 && reponse != 3) {
 			//Si le choix est hors du rang 
-			System.out.println("Erreur de saisie. Choisisez entre \" 1\", \" 2\" et \" 3\"  svp:");
+			System.out.println("Input error. Choose between \" 1\", \" 2\" and \" 3\"  please:");
 			reponse=this.submenu();
 		}
 		return reponse; 
@@ -125,9 +125,9 @@ public class Menu {
 
 	public void setApplicationJeuType() {
 		if (this.menu_option == 1) {
-			applicationContext.setJeuType(JeuType.RECHERCHE); 
+			applicationContext.setGameType(GameType.RECHERCHE); 
 		} else {
-			applicationContext.setJeuType(JeuType.MASTEMIND); 
+			applicationContext.setGameType(GameType.MASTEMIND); 
 		}
 	}
 	

@@ -1,4 +1,4 @@
-package com.projet.jeu.context;
+package com.project.game.context;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -8,37 +8,37 @@ import java.util.Properties;
 
 import org.apache.log4j.BasicConfigurator;
 
-import com.projet.jeu.jeux.Jeu;
-import com.projet.jeu.jeux.JeuMode;
-import com.projet.jeu.jeux.JeuType;
+import com.project.game.games.Game;
+import com.project.game.games.GameMode;
+import com.project.game.games.GameType;
 
 public class ApplicationContext {
 	
-	private static BufferedReader lecteur = new BufferedReader(new InputStreamReader(System.in));
-	private JeuMode jeuMode;
-	private JeuType jeuType;
-	private Jeu jeu;
-	private int nombreEssais;
-	private int nombreCases;
+	private static BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+	private GameMode gameMode;
+	private GameType gameType;
+	private Game game;
+	private int numberOfAttemps;
+	private int numberOfBox;
 	private boolean modeDevelop;
 	private char exitControl = 'N';
 	
 	//Constructor a rellenar
 	public ApplicationContext() {
 		//Inisialisation des parametres de config
-		lireConfigFile();
+		readConfigFile();
 		
 		//Inisialisation log4j
 		BasicConfigurator.configure();
 	}
 	
 	//Methode pour lire le fichier config
-	private void lireConfigFile() {
+	private void readConfigFile() {
 		Properties properties = new Properties();
 		try {
 			properties.load(new FileReader("src/main/resources/config.properties"));
-			this.nombreEssais = Integer.valueOf(properties.getProperty("nombreEssai"));
-			this.nombreCases = Integer.valueOf(properties.getProperty("nombreCases"));
+			this.numberOfAttemps = Integer.valueOf(properties.getProperty("nombreEssai"));
+			this.numberOfBox = Integer.valueOf(properties.getProperty("nombreCases"));
 			if (properties.getProperty("modeDevelopeur").equalsIgnoreCase("Oui")) {
 				this.modeDevelop = true;
 			} else {
@@ -53,12 +53,12 @@ public class ApplicationContext {
 		}
 	}
 	
-	//Methode pour gerer la sortie du jeu
-	public char gererSortie() {
-		System.out.println("Voulez-vous quitter le jeu? (O/N)");
+	//Methode pour gerer la sortie du game
+	public char exitApplication() {
+		System.out.println("Voulez-vous quitter le game? (O/N)");
 		char resp;
 		try {
-			resp = lecteur.readLine().charAt(0);
+			resp = reader.readLine().charAt(0);
 		} catch (IOException e) {
 			System.out.println("Erreur de saissie. Reesayez seulement avec O ou N");
 			resp = exitControl;
@@ -69,48 +69,48 @@ public class ApplicationContext {
 
 	//Getters et Setters
 	
-	public JeuMode getJeuMode() {
-		return jeuMode;
+	public GameMode getGameMode() {
+		return gameMode;
 	}
 
-	public void setJeuMode(JeuMode jeuMode) {
-		this.jeuMode = jeuMode;
+	public void setGameMode(GameMode gameMode) {
+		this.gameMode = gameMode;
 	}
 
-	public Jeu getJeu() {
-		return jeu;
+	public Game getGame() {
+		return game;
 	}
 
-	public void setJeu(Jeu jeu) {
-		this.jeu = jeu;
+	public void setGame(Game game) {
+		this.game = game;
 	}
 
-	public int getNombreEssais() {
-		return nombreEssais;
+	public int getNumberOfAttemps() {
+		return numberOfAttemps;
 	}
 
-	public int getNombreCases() {
-		return nombreCases;
+	public int getNumberOfBox() {
+		return numberOfBox;
 	}
 
 	public boolean isModeDevelop() {
 		return modeDevelop;
 	}
 
-	public static BufferedReader getLecteur() {
-		return lecteur;
+	public static BufferedReader getReader() {
+		return reader;
 	}
 
-	public static void setLecteur(BufferedReader lecteur) {
-		ApplicationContext.lecteur = lecteur;
+	public static void setReader(BufferedReader lecteur) {
+		ApplicationContext.reader = lecteur;
 	}
 
-	public JeuType getJeuType() {
-		return jeuType;
+	public GameType getGameType() {
+		return gameType;
 	}
 
-	public void setJeuType(JeuType jeuType) {
-		this.jeuType = jeuType;
+	public void setGameType(GameType gameType) {
+		this.gameType = gameType;
 	}
 
 	public char getExitControl() {

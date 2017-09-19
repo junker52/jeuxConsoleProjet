@@ -1,18 +1,18 @@
-package com.projet.jeu.jeux;
+package com.project.game.games;
 
 /*
  * Enum pour gerer les 3 modes de jeu
  * 
  * @author junker52
  */
-public enum JeuMode {
-	DEFENSEUR("defenseur"),
+public enum GameMode {
+	DEFENSE("defense"),
 	CHALLENGE("challenge"),
 	DUEL("duel");
 	
 	private String descripMode;
 	
-	private JeuMode(String mod) {
+	private GameMode(String mod) {
 		this.descripMode = mod;
 	}
 
