@@ -56,10 +56,13 @@ public abstract class Game {
 		ArrayList<Integer> combinaison = new ArrayList<Integer>();
 		System.out.print("Write a combination of " + applicationContext.getNumberOfBox() + " numbers: \t");
 		try {
-			int combInt = Integer.valueOf(ApplicationContext.getReader().readLine());
-			String combString = Integer.toString(combInt);
+			String combInt = ApplicationContext.getReader().readLine();
+			while(combInt.length() > applicationContext.getNumberOfBox()) {
+				System.out.println("Max "+applicationContext.getNumberOfBox()+" numbers. Retry!");
+				combInt = ApplicationContext.getReader().readLine();
+			}
 			for (int i = 0; i < applicationContext.getNumberOfBox(); i++) {
-				int chifre = Integer.parseInt("" + combString.charAt(i));
+				int chifre = Integer.parseInt("" + combInt.charAt(i));
 				combinaison.add(chifre);
 			}
 		} catch (Exception e) {

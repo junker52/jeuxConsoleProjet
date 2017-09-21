@@ -62,7 +62,7 @@ public class GameRecherche extends Game {
 				System.out.println("MEC! There are not more attemps! GAME OVER!");
 			}
 		}
-
+		
 	}
 	
 	/*
