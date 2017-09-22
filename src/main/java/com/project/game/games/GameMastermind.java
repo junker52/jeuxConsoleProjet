@@ -197,7 +197,7 @@ public class GameMastermind extends Game {
 		return resultMap;
 	}
 
-	// EN COURS
+
 	public List<String> CleanPoolList(String attempt, Map<String, Integer> help, List<String> poolList) {
 		Iterator<String> iterat = poolList.iterator();
 		int well = help.get("well");
