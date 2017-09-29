@@ -90,28 +90,16 @@ public class GameMastermind extends Game {
 	 * @return List of possible solutions
 	 */
 	public List<String> GetAllPossibleSolutions() {
-		char[] _ValidDigits = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' };
-		List<String> tokens = new ArrayList<String>();
-		for (int i1 = 0; i1 < _ValidDigits.length; i1++) {
-			for (int i2 = 0; i2 < _ValidDigits.length; i2++) {
-				for (int i3 = 0; i3 < _ValidDigits.length; i3++) {
-					for (int i4 = 0; i4 < _ValidDigits.length; i4++) {
-						for (int i5 = 0; i5 < _ValidDigits.length; i5++) {
-							if (i1 != i2 && i1 != i3 && i1 != i4 && i1 != i5 && i2 != i3 && i2 != i4 && i2 != i5
-									&& i3 != i4 && i3 != i5 && i4 != i5) {
-								tokens.add(("" + _ValidDigits[i1] + _ValidDigits[i2] + _ValidDigits[i3]
-										+ _ValidDigits[i4] + _ValidDigits[i5]));
-							}
-
-						}
-
-					}
-
-				}
-			}
+		
+		ArrayList<String> listString = new ArrayList<String>();
+		String num_add;
+		for (int i = 0; i < Math.pow(10, applicationContext.getNumberOfBox()); i++) {
+			num_add = String.format("%0"+applicationContext.getNumberOfBox()+"d", i);
+			listString.add(num_add);
+			System.out.println(num_add);
 		}
-
-		return tokens;
+		
+		return listString;
 	}
 
 	/*
