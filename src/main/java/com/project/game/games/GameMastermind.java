@@ -138,12 +138,6 @@ public class GameMastermind extends Game {
 	}
 
 	@Override
-	String evaluateCombination(ArrayList<Integer> SecretComb, ArrayList<Integer> AttemptComb) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	String evaluateCombinationPlayer() {
 		int well = 0; int bad = 0; int atcompare;	
 		for (int i = 0; i < this.attemptCombJoueur.size(); i++) {

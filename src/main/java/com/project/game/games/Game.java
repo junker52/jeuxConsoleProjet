@@ -124,8 +124,6 @@ public abstract class Game {
 
 	abstract void executeGameDuel();
 
-	abstract String evaluateCombination(ArrayList<Integer> SecretComb, ArrayList<Integer> AttemptComb);
-
 	abstract String evaluateCombinationPlayer();
 
 }

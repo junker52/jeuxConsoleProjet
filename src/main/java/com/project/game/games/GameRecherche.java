@@ -170,8 +170,8 @@ public class GameRecherche extends Game {
 	 *  	ArrayList contenent la combinaison saisie
 	 * 
 	 */
-	@Override
-	String evaluateCombination(ArrayList<Integer> secretComb, ArrayList<Integer> attemptComb) {
+	
+	public String evaluateCombination(ArrayList<Integer> secretComb, ArrayList<Integer> attemptComb) {
 		StringBuffer result = new StringBuffer();
 		for (int i = 0; i < attemptComb.size(); i++) {
 			if (secretComb.get(i) > attemptComb.get(i)) {
