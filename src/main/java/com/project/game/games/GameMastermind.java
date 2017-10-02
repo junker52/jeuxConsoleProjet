@@ -48,7 +48,7 @@ public class GameMastermind extends Game {
 			System.out.println(this.evaluateCombinationPlayer());
 			this.attemptCombJoueur = setAttemptComb();
 			if (this.attemptCombJoueur.equals(super.secretComb)) {				
-				System.out.println("BRAVO!! You won in "+i+" attempts!!");
+				System.out.println("BRAVO!! You won in "+(i+1)+" attempts!!");
 				break;
 			}
 		}		
@@ -60,16 +60,22 @@ public class GameMastermind extends Game {
 		super.attemptComb = null;
 		this.poolOptions = GetAllPossibleSolutions();
 		this.secretCombJoueur = SetSecretComb(poolOptions);
+		int attemp = 1;
 		if (super.attemptComb == null) {
 			super.attemptComb = MoveComputer(poolOptions);
 		}
 		while(!super.attemptComb.equals(secretCombJoueur))
-		{		
+		{	
+			if (attemp > applicationContext.getNumberOfAttemps() ) {
+				System.out.println("Game Over. No more attempts. PC loses!");
+				break;
+			}
 			System.out.println(poolOptions.contains(super.toString(secretCombJoueur)));
 			this.help = GetGuessFromUser();
 			System.out.println(poolOptions.size());
 			this.poolOptions = CleanPoolList(attemptComb, help, poolOptions);
-			super.attemptComb = MoveComputer(poolOptions);			
+			super.attemptComb = MoveComputer(poolOptions);	
+			attemp++;
 		}
 		if (super.attemptComb.equals(secretCombJoueur)) {
 			System.out.println("Computer has found your combination!!");
