@@ -98,6 +98,25 @@ public abstract class Game {
 		}
 		return combinaison;
 	}
+	
+	
+	public ArrayList<Integer> toArrayList(String input) {
+		ArrayList<Integer> result = new ArrayList<Integer>();
+		int integ_temp;
+		for (int i = 0; i < input.length(); i++) {
+			integ_temp = Integer.parseInt(input.charAt(i)+"");
+			result.add(integ_temp);
+		}
+		return result;
+	}
+	
+	public String toString(ArrayList<Integer> input) {
+		StringBuffer result = new StringBuffer();
+		for (int i = 0; i < input.size(); i++) {
+			result.append(Integer.toString(input.get(i)));
+		}
+		return input.toString();
+	}
 
 	abstract void executeGameChallenge();
 

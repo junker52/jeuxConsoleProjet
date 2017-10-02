@@ -8,14 +8,14 @@ import java.util.List;
 import java.util.Map;
 
 import com.project.game.context.ApplicationContext;
+import com.sun.xml.internal.bind.v2.runtime.unmarshaller.XsiNilLoader.Array;
 
 import javafx.collections.transformation.SortedList;
 
 public class GameMastermind extends Game {
 
-	private String lastAttempt;
-	private String secretComb;
-	private String secretCombJoueur;
+	private ArrayList<Integer> attemptCombJoueur;
+	private ArrayList<Integer> secretCombJoueur;
 	private Map<String, Integer> help;
 	private List<String> poolOptions = new ArrayList<String>();
 
@@ -43,21 +43,21 @@ public class GameMastermind extends Game {
 	@Override
 	void executeGameDefense() {
 		System.out.println("Bienvenue au Mastermind || Mode Defenseur");
+		super.attemptComb = null;
 		this.poolOptions = GetAllPossibleSolutions();
 		this.secretCombJoueur = SetSecretComb(poolOptions);
-		if (this.lastAttempt == null) {
-			this.lastAttempt = MoveComputer(poolOptions);
+		if (super.attemptComb == null) {
+			super.attemptComb = MoveComputer(poolOptions);
 		}
-		while(!this.lastAttempt.equals(secretCombJoueur))
+		while(!super.attemptComb.equals(secretCombJoueur))
 		{		
-			System.out.println(poolOptions.contains(secretCombJoueur));
+			System.out.println(poolOptions.contains(super.toString(secretCombJoueur)));
 			this.help = GetGuessFromUser();
 			System.out.println(poolOptions.size());
-			this.poolOptions = CleanPoolList(lastAttempt, help, poolOptions);
-			System.out.println("After pooling "+poolOptions.size());
-			this.lastAttempt = MoveComputer(poolOptions);			
+			this.poolOptions = CleanPoolList(attemptComb, help, poolOptions);
+			super.attemptComb = MoveComputer(poolOptions);			
 		}
-		if (this.lastAttempt.equals(secretCombJoueur)) {
+		if (super.attemptComb.equals(secretCombJoueur)) {
 			System.out.println("Computer has found your combination!!");
 		} 
 		
@@ -81,9 +81,6 @@ public class GameMastermind extends Game {
 		return null;
 	}
 
-	List<String> _PossibleTokens;
-	String _LastMove;
-
 	/*
 	 * This method creates a list with all possible solutions
 	 * 
@@ -96,7 +93,6 @@ public class GameMastermind extends Game {
 		for (int i = 0; i < Math.pow(10, applicationContext.getNumberOfBox()); i++) {
 			num_add = String.format("%0"+applicationContext.getNumberOfBox()+"d", i);
 			listString.add(num_add);
-			System.out.println(num_add);
 		}
 		
 		return listString;
@@ -130,22 +126,25 @@ public class GameMastermind extends Game {
 	 * 
 	 * @return The validated secret combination
 	 */
-	public String SetSecretComb(List<String> poolList) {
-		String secret = " ";
+	public ArrayList<Integer> SetSecretComb(List<String> poolList) {		
+		ArrayList<Integer> result = new ArrayList<Integer>();
 		System.out.println("Your secret combination? (5 non-repeated numbers)");
 		try {
 			String secret_temp = ApplicationContext.getReader().readLine();
-			if (secret_temp.length() == 5 && poolList.contains(secret_temp)) {
-				secret = secret_temp;
+			if (secret_temp.length() == applicationContext.getNumberOfBox() && poolList.contains(secret_temp)) {
+				for (int i = 0; i < secret_temp.length(); i++) {
+					char integ = secret_temp.charAt(i);
+					result.add(Integer.parseInt(integ+""));
+				}
 			} else {
 				System.out.println("Invalid combination. Retry.");
-				secret = SetSecretComb(poolList);
+				result = SetSecretComb(poolList);
 			}
 		} catch (IOException e) {
 			System.out.println("Invalid combination. Retry.");
-			secret = SetSecretComb(poolList);
+			result = SetSecretComb(poolList);
 		}
-		return secret;
+		return result;
 	}
 
 	/*
@@ -155,20 +154,26 @@ public class GameMastermind extends Game {
 	 * 
 	 * @return First computer attempt
 	 */
-	public String MoveComputer(List<String> list) {
+	public ArrayList<Integer> MoveComputer(List<String> list) {
 		int randomOption = (int) (Math.random() * list.size());
 		System.out.println("Combination : "+list.get(randomOption));
-		return list.get(randomOption);
+		String result_str = list.get(randomOption);
+		ArrayList<Integer> result = new ArrayList<Integer>();
+		for (int i = 0; i < result_str.length(); i++) {
+			char integ = result_str.charAt(i);
+			result.add(Integer.parseInt(integ+""));
+		}
+		return result;
 	}
 
-	public Map<String, Integer> CompareToGetGuess(String toCompare, String compared) {
-		char toCompare_char;
+	public Map<String, Integer> CompareToGetGuess(ArrayList<Integer> toCompare, ArrayList<Integer> compared) {
+		int toCompare_integ;
 		int well = 0;
 		int bad = 0;
-		for (int i = 0; i < toCompare.length(); i++) {
-			toCompare_char = toCompare.charAt(i);
-			for (int j = 0; j < compared.length(); j++) {
-				if (toCompare_char == compared.charAt(j)) {
+		for (int i = 0; i < toCompare.size(); i++) {
+			toCompare_integ = toCompare.get(i);
+			for (int j = 0; j < compared.size(); j++) {
+				if (toCompare_integ == compared.get(j)) {
 					if (i == j) {
 						// The same number in the same position: well-placed + 1
 						well++;
@@ -186,14 +191,16 @@ public class GameMastermind extends Game {
 	}
 
 
-	public List<String> CleanPoolList(String attempt, Map<String, Integer> help, List<String> poolList) {
+	public List<String> CleanPoolList(ArrayList<Integer> attempt, Map<String, Integer> help, List<String> poolList) {
 		Iterator<String> iterat = poolList.iterator();
 		int well = help.get("well");
 		int bad = help.get("bad");
 		Map<String, Integer> map_temp;
+		ArrayList<Integer> combi = new ArrayList<Integer>();
 		while (iterat.hasNext()) {
 			String toCompare = iterat.next();
-			map_temp = CompareToGetGuess(toCompare, attempt);
+			combi = toArrayList(toCompare);
+			map_temp = CompareToGetGuess(combi, attempt);
 			if (  well != map_temp.get("well") && bad != map_temp.get("bad")) {
 				iterat.remove();
 			}
@@ -202,5 +209,6 @@ public class GameMastermind extends Game {
 		return poolList;
 
 	}
+
 
 }
