@@ -38,7 +38,6 @@ public class GameMastermind extends Game {
 	void executeGameChallenge() {
 		System.out.println("Bienvenue au Mastermind || Mode Challenge");
 		this.attemptCombJoueur = null;
-//		this.poolOptions = GetAllPossibleSolutions();
 		super.secretComb = super.setSecretComb();
 		super.showSolution(super.secretComb);
 		if (this.attemptCombJoueur == null) {
@@ -85,7 +84,56 @@ public class GameMastermind extends Game {
 
 	@Override
 	void executeGameDuel() {
-		// TODO Auto-generated method stub
+		System.out.println("Bienvenue au Mastermind || Mode Duel");
+		this.attemptCombJoueur = null;
+		super.attemptComb = null;
+		//Player sets secret combination for PC
+		this.poolOptions = GetAllPossibleSolutions();
+		this.secretCombJoueur = SetSecretComb(poolOptions);
+		//PC chooses the secret combination for player
+		super.secretComb = super.setSecretComb();
+		//Showing secret combinations if it's necessary
+		System.out.println("Player:");
+		super.showSolution(this.secretCombJoueur);
+		System.out.println("PC:");
+		super.showSolution(super.secretComb);
+		//Starting counters
+		int count_player = 1; int count_pc = 1;
+		while (count_pc < applicationContext.getNumberOfAttemps() 
+				&& count_player < applicationContext.getNumberOfAttemps()) {
+			//First the player...
+			if(attemptCombJoueur != null) {
+				System.out.println("Player goes with its last try: "+attemptCombJoueur);
+			}
+			this.attemptCombJoueur = setAttemptComb();
+			if (this.attemptCombJoueur.equals(super.secretComb)) {				
+				System.out.println("BRAVO!! You won in "+count_player+" attempts!!");
+				break;
+			}
+			System.out.println(this.evaluateCombinationPlayer());
+			count_player++;
+			
+			//Then PC...
+			if (super.attemptComb != null) {
+				System.out.println("PC goes to defend its secret combination: "+this.secretCombJoueur);
+			}			
+			super.attemptComb = MoveComputer(poolOptions);
+			if (super.attemptComb.equals(this.secretCombJoueur)) {
+				System.out.println("Game Over! PC found your combination in "+count_pc+" attempts!");
+				break;
+			}
+			this.help = GetGuessFromUser();
+			System.out.println(poolOptions.size());
+			this.poolOptions = CleanPoolList(attemptComb, help, poolOptions);
+			count_pc++;
+		}
+		//Messages when no more attempts
+		if (count_pc >= applicationContext.getNumberOfAttemps()) {
+			System.out.println("No more attemps for PC! Player wins!!");
+		} else if (count_player >= applicationContext.getNumberOfAttemps()) {
+			System.out.println("No more attempts for Player! PC wins!");
+		}
+		
 
 	}
 
