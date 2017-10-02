@@ -36,8 +36,22 @@ public class GameMastermind extends Game {
 
 	@Override
 	void executeGameChallenge() {
-		// TODO Auto-generated method stub
-
+		System.out.println("Bienvenue au Mastermind || Mode Challenge");
+		this.attemptCombJoueur = null;
+//		this.poolOptions = GetAllPossibleSolutions();
+		super.secretComb = super.setSecretComb();
+		super.showSolution(super.secretComb);
+		if (this.attemptCombJoueur == null) {
+			this.attemptCombJoueur = setAttemptComb();
+		}
+		for (int i = 1; i < applicationContext.getNumberOfAttemps(); i++) {
+			System.out.println(this.evaluateCombinationPlayer());
+			this.attemptCombJoueur = setAttemptComb();
+			if (this.attemptCombJoueur.equals(super.secretComb)) {				
+				System.out.println("BRAVO!! You won in "+i+" attempts!!");
+				break;
+			}
+		}		
 	}
 
 	@Override
@@ -77,8 +91,20 @@ public class GameMastermind extends Game {
 
 	@Override
 	String evaluateCombinationPlayer() {
-		// TODO Auto-generated method stub
-		return null;
+		int well = 0; int bad = 0; int atcompare;	
+		for (int i = 0; i < this.attemptCombJoueur.size(); i++) {
+			atcompare = attemptCombJoueur.get(i);
+			for (int j = 0; j < secretComb.size(); j++) {
+				if (atcompare == secretComb.get(j)) {
+					if (i == j) {
+						well++;
+					} else {
+						bad++;
+					}
+				} 
+			}
+		}
+		return "Well-placed: "+well+" || Bad-placed: "+bad;
 	}
 
 	/*

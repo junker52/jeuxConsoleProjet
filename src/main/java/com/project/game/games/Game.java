@@ -48,7 +48,7 @@ public abstract class Game {
 	public void showSolution(ArrayList<Integer> array) {
 		// Gestion du mode developpeur
 		if (applicationContext.isModeDevelop()) {
-			System.out.println(array.toString() + " \n");
+			System.out.println("Secret Combination is: "+array.toString() + " \n");
 		}
 	}
 
