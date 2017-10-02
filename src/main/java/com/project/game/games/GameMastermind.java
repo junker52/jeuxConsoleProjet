@@ -97,7 +97,7 @@ public class GameMastermind extends Game {
 		super.showSolution(this.secretCombJoueur);
 		System.out.println("PC:");
 		super.showSolution(super.secretComb);
-		//Starting counters
+		//Starting counters...
 		int count_player = 1; int count_pc = 1;
 		while (count_pc < applicationContext.getNumberOfAttemps() 
 				&& count_player < applicationContext.getNumberOfAttemps()) {
