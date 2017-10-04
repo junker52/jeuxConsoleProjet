@@ -85,9 +85,8 @@ public abstract class Game {
 	public ArrayList<Integer> inputSecretComb() {
 		System.out.println("Write a secret combination of " + applicationContext.getNumberOfBox() + " numbers: ");
 		ArrayList<Integer> combinaison = new ArrayList<Integer>();
-		try {
-			int combInt = Integer.valueOf(ApplicationContext.getReader().readLine());
-			String combString = Integer.toString(combInt);
+		try {			
+			String combString = ApplicationContext.getReader().readLine();
 			for (int i = 0; i < applicationContext.getNumberOfBox(); i++) {
 				int chifre = Integer.parseInt("" + combString.charAt(i));
 				combinaison.add(chifre);
