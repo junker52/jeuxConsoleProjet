@@ -192,7 +192,7 @@ public class GameRecherche extends Game {
 	 */
 	@Override
 	String evaluateCombinationPlayer() {
-		System.out.println("Evaluez la combinaison proposée (>,<,=): ");
+		System.out.println("Evaluate combination (>,<,=): ");
 		String respo = " ";
 		try {
 			boolean verif_string = true;
@@ -205,11 +205,11 @@ public class GameRecherche extends Game {
 			}
 			// Si la verif ne se passe pas bien, on relance la methode.
 			if (verif_string == false) {
-				System.out.println("Evaluation invalide, reessayez!");
+				System.out.println("Invalid evaluation. Retry!");
 				respo = evaluateCombinationPlayer();
 			}
 		} catch (IOException e) {
-			System.out.println("Evaluation invalide, reessayez!");
+			System.out.println("Invalid evaluation. Retry!");
 			respo = evaluateCombinationPlayer();
 		}
 		return respo;
