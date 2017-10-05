@@ -12,13 +12,21 @@ import com.sun.xml.internal.bind.v2.runtime.unmarshaller.XsiNilLoader.Array;
 
 import javafx.collections.transformation.SortedList;
 
+/**
+ * <p>This class execute a Mastermind game instance</p>
+ * @author junker52
+ *
+ */
 public class GameMastermind extends Game {
-
-	private ArrayList<Integer> attemptCombJoueur;
-	private ArrayList<Integer> secretCombJoueur;
+	
 	private Map<String, Integer> help;
 	private List<String> poolOptions = new ArrayList<String>();
-
+	
+	/**
+	 * <p>Constructor to execute the game in one of its different modes</p>
+	 * @param applicationContext 
+	 * 		Used applicationContext 
+	 */
 	public GameMastermind(ApplicationContext applicationContext) {
 		super(applicationContext);
 		switch (applicationContext.getGameMode()) {
@@ -37,16 +45,16 @@ public class GameMastermind extends Game {
 	@Override
 	void executeGameChallenge() {
 		System.out.println("Bienvenue au Mastermind || Mode Challenge");
-		this.attemptCombJoueur = null;
-		super.secretComb = super.setSecretComb();
+		super.attemptCombPlayer = null;
+		super.secretComb = super.setRandomSecretComb();
 		super.showSolution(super.secretComb);
-		if (this.attemptCombJoueur == null) {
-			this.attemptCombJoueur = setAttemptComb();
+		if (super.attemptCombPlayer == null) {
+			super.attemptCombPlayer = setAttemptComb();
 		}
 		for (int i = 1; i < applicationContext.getNumberOfAttemps(); i++) {
 			System.out.println(this.evaluateCombinationPlayer());
-			this.attemptCombJoueur = setAttemptComb();
-			if (this.attemptCombJoueur.equals(super.secretComb)) {				
+			super.attemptCombPlayer = setAttemptComb();
+			if (super.attemptCombPlayer.equals(super.secretComb)) {				
 				System.out.println("BRAVO!! You won in "+(i+1)+" attempts!!");
 				break;
 			}
@@ -58,25 +66,23 @@ public class GameMastermind extends Game {
 		System.out.println("Bienvenue au Mastermind || Mode Defenseur");
 		super.attemptComb = null;
 		this.poolOptions = GetAllPossibleSolutions();
-		this.secretCombJoueur = SetSecretComb(poolOptions);
+		super.secretCombPlayer = SetSecretComb(poolOptions);
 		int attemp = 1;
 		if (super.attemptComb == null) {
 			super.attemptComb = MoveComputer(poolOptions);
 		}
-		while(!super.attemptComb.equals(secretCombJoueur))
+		while(!super.attemptComb.equals(secretCombPlayer))
 		{	
 			if (attemp > applicationContext.getNumberOfAttemps() ) {
 				System.out.println("Game Over. No more attempts. PC loses!");
 				break;
 			}
-			System.out.println(poolOptions.contains(super.toString(secretCombJoueur)));
 			this.help = GetGuessFromUser();
-			System.out.println(poolOptions.size());
 			this.poolOptions = CleanPoolList(attemptComb, help, poolOptions);
 			super.attemptComb = MoveComputer(poolOptions);	
 			attemp++;
 		}
-		if (super.attemptComb.equals(secretCombJoueur)) {
+		if (super.attemptComb.equals(secretCombPlayer)) {
 			System.out.println("Computer has found your combination!!");
 		} 
 		
@@ -85,16 +91,16 @@ public class GameMastermind extends Game {
 	@Override
 	void executeGameDuel() {
 		System.out.println("Bienvenue au Mastermind || Mode Duel");
-		this.attemptCombJoueur = null;
+		super.attemptCombPlayer = null;
 		super.attemptComb = null;
 		//Player sets secret combination for PC
 		this.poolOptions = GetAllPossibleSolutions();
-		this.secretCombJoueur = SetSecretComb(poolOptions);
+		super.secretCombPlayer = SetSecretComb(poolOptions);
 		//PC chooses the secret combination for player
-		super.secretComb = super.setSecretComb();
+		super.secretComb = super.setRandomSecretComb();
 		//Showing secret combinations if it's necessary
 		System.out.println("Player:");
-		super.showSolution(this.secretCombJoueur);
+		super.showSolution(super.secretCombPlayer);
 		System.out.println("PC:");
 		super.showSolution(super.secretComb);
 		//Starting counters...
@@ -102,11 +108,11 @@ public class GameMastermind extends Game {
 		while (count_pc < applicationContext.getNumberOfAttemps() 
 				&& count_player < applicationContext.getNumberOfAttemps()) {
 			//First the player...
-			if(attemptCombJoueur != null) {
-				System.out.println("Player goes with its last try: "+attemptCombJoueur);
+			if(attemptCombPlayer != null) {
+				System.out.println("Player goes with its last try: "+attemptCombPlayer);
 			}
-			this.attemptCombJoueur = setAttemptComb();
-			if (this.attemptCombJoueur.equals(super.secretComb)) {				
+			super.attemptCombPlayer = setAttemptComb();
+			if (super.attemptCombPlayer.equals(super.secretComb)) {				
 				System.out.println("BRAVO!! You won in "+count_player+" attempts!!");
 				break;
 			}
@@ -115,10 +121,10 @@ public class GameMastermind extends Game {
 			
 			//Then PC...
 			if (super.attemptComb != null) {
-				System.out.println("PC goes to defend its secret combination: "+this.secretCombJoueur);
+				System.out.println("PC goes to defend its secret combination: "+super.secretCombPlayer);
 			}			
 			super.attemptComb = MoveComputer(poolOptions);
-			if (super.attemptComb.equals(this.secretCombJoueur)) {
+			if (super.attemptComb.equals(super.secretCombPlayer)) {
 				System.out.println("Game Over! PC found your combination in "+count_pc+" attempts!");
 				break;
 			}
@@ -140,8 +146,8 @@ public class GameMastermind extends Game {
 	@Override
 	String evaluateCombinationPlayer() {
 		int well = 0; int bad = 0; int atcompare;	
-		for (int i = 0; i < this.attemptCombJoueur.size(); i++) {
-			atcompare = attemptCombJoueur.get(i);
+		for (int i = 0; i < super.attemptCombPlayer.size(); i++) {
+			atcompare = attemptCombPlayer.get(i);
 			for (int j = 0; j < secretComb.size(); j++) {
 				if (atcompare == secretComb.get(j)) {
 					if (i == j) {
@@ -155,7 +161,7 @@ public class GameMastermind extends Game {
 		return "Well-placed: "+well+" || Bad-placed: "+bad;
 	}
 
-	/*
+	/**
 	 * This method creates a list with all possible solutions
 	 * 
 	 * @return List of possible solutions
@@ -172,7 +178,7 @@ public class GameMastermind extends Game {
 		return listString;
 	}
 
-	/*
+	/**
 	 * This method is used to allow the user to write the guess for each computer
 	 * move
 	 * 
@@ -193,7 +199,7 @@ public class GameMastermind extends Game {
 		return guess;
 	}
 
-	/*
+	/**
 	 * This method is used by the user to set the secret combinaiton
 	 * 
 	 * @param poolList List with all possibles combinations
@@ -221,7 +227,7 @@ public class GameMastermind extends Game {
 		return result;
 	}
 
-	/*
+	/**
 	 * Method for getting the first guess completly random
 	 * 
 	 * @param list List with all solutions
@@ -240,6 +246,14 @@ public class GameMastermind extends Game {
 		return result;
 	}
 
+	/**
+	 * This methods compares two combination to get a help for solve the game
+	 * @param toCompare
+	 * 		Combination of the pool to be compared
+	 * @param compared
+	 * 		Attempt combination
+	 * @return Map with well and bad-placed numbers. "Well". "Bad"
+	 */
 	public Map<String, Integer> CompareToGetGuess(ArrayList<Integer> toCompare, ArrayList<Integer> compared) {
 		int toCompare_integ;
 		int well = 0;
@@ -264,7 +278,16 @@ public class GameMastermind extends Game {
 		return resultMap;
 	}
 
-
+	/**
+	 * This method cleans the pool to reduce the possible solution list
+	 * @param attempt
+	 * 		Last attempt
+	 * @param help
+	 * 		Map with well and bad-placed numbers
+	 * @param poolList
+	 * 		List with Possible Combinations
+	 * @return Reduced List with Possible Combinations
+	 */
 	public List<String> CleanPoolList(ArrayList<Integer> attempt, Map<String, Integer> help, List<String> poolList) {
 		Iterator<String> iterat = poolList.iterator();
 		int well = help.get("well");

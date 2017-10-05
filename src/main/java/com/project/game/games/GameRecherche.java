@@ -5,8 +5,8 @@ import java.util.ArrayList;
 
 import com.project.game.context.ApplicationContext;
 
-/*
- * Classe permettant de gerer le jeu recherche +/-
+/**
+ * <p>This class allows to execute the Recherche Game</p>
  * 
  * @author junker52
  */
@@ -15,14 +15,12 @@ public class GameRecherche extends Game {
 
 	private String evaluationPlayer=" ";
 	private String evaluationComput=" ";
-	protected ArrayList<Integer> secretCombPlayer = new ArrayList<Integer>();
-	protected ArrayList<Integer> attemptCombPlayer = new ArrayList<Integer>();
 
-	/*
-	 * <p> Constructor pour lancer le jeu directement </p>
+	/**
+	 * <p> Constructor for Recherche Game </p>
 	 * 
 	 * @param a
-	 * 		L'objet ApplicationContext de l'application.
+	 * 		The ApplicationContext of the game
 	 */
 	public GameRecherche(ApplicationContext a) {
 		super(a);
@@ -39,14 +37,14 @@ public class GameRecherche extends Game {
 		}
 	}
 
-	/*
-	 * <p> Methode pour lancer le jeu recherche en mode Challenger </p>
+	/**
+	 * <p> This method executes the game in mode challenge  </p>
 	 * 
 	 */
 	@Override
 	void executeGameChallenge() {
 		System.out.println("Welcome to Recherche +//- || Mode Challenger");
-		super.secretComb = super.setSecretComb();
+		super.secretComb = super.setRandomSecretComb();
 		super.showSolution(super.secretComb);
 		// D'abord un loop pour les essais
 		for (int i = 0; i < applicationContext.getNumberOfAttemps(); i++) {
@@ -65,8 +63,8 @@ public class GameRecherche extends Game {
 		
 	}
 	
-	/*
-	 * <p> Methode pour lancer le jeu recherche en mode Defenseur </p>
+	/**
+	 * <p> This method executes the game in mode defense </p>
 	 * 
 	 */
 	@Override
@@ -77,7 +75,7 @@ public class GameRecherche extends Game {
 		super.showSolution(super.secretComb);
 		for (int i = 0; i < applicationContext.getNumberOfAttemps(); i++) {
 			if (attemptComb == null) {
-				attemptComb = super.setSecretComb();
+				attemptComb = super.setRandomSecretComb();
 			}
 			System.out.println("The computer attempt is : " + attemptComb);
 			if (super.isSecretCobination(attemptComb, secretComb)) {
@@ -94,16 +92,16 @@ public class GameRecherche extends Game {
 
 	}
 
-	/*
-	 * <p> Methode pour lancer le jeu recherche en mode Duel </p>
+	/**
+	 * <p> This method executes the game in mode duel </p>
 	 * 
 	 */
 	@Override
 	void executeGameDuel() {
 		System.out.println("Welcome to Recherche +//-  || Mode Duel");
 		//Saisir les combinaisons secretes
-		super.secretComb = super.setSecretComb();
-		this.secretCombPlayer = super.inputSecretComb();
+		super.secretComb = super.setRandomSecretComb();
+		super.secretCombPlayer = super.inputSecretComb();
 		//Printer les combis
 		if (applicationContext.isModeDevelop()) {
 			System.out.println("Computer secret combination: ");
@@ -111,7 +109,7 @@ public class GameRecherche extends Game {
 			System.out.println("Player secret combination:");
 			super.showSolution(secretCombPlayer);
 		}
-		attemptComb = null; attemptCombPlayer = null;
+		attemptComb = null; super.attemptCombPlayer = null;
 		//init des compteus pour les deux jueurs
 		int i_comput = 0;
 		int i_joueur = 0;
@@ -122,10 +120,10 @@ public class GameRecherche extends Game {
 			//D'abord l'ordinateur commence avec la combinaison secrete du joueur
 			System.out.println("Computer goes against the player combination");
 			if (attemptComb == null) {
-				attemptComb = super.setSecretComb();
+				attemptComb = super.setRandomSecretComb();
 			}
 			System.out.println("Computer attempt: " + attemptComb);
-			if (super.isSecretCobination(attemptComb,secretCombPlayer)) {
+			if (super.isSecretCobination(attemptComb, super.secretCombPlayer)) {
 				System.out.println("Computer has found your secret combination in " + i_comput + " attempts");
 				break;
 			}
@@ -135,13 +133,13 @@ public class GameRecherche extends Game {
 			
 			//Ensuite, c'est le joueur qui devine la combinaison du pc
 			System.out.println("Player goes against the computer combination: ");	
-			System.out.println("Player attempt is: " + attemptCombPlayer+"  help: "+evaluationPlayer);
-			attemptCombPlayer = super.setAttemptComb();			
-			if (super.isSecretCobination(attemptCombPlayer, secretComb)) {
+			System.out.println("Player attempt is: " + super.attemptCombPlayer+"  help: "+evaluationPlayer);
+			super.attemptCombPlayer = super.setAttemptComb();			
+			if (super.isSecretCobination(super.attemptCombPlayer, secretComb)) {
 				System.out.println("Bravo! You have found the secret combination in " + i_joueur + " attempts");
 				break;
 			}
-			this.evaluationPlayer = evaluateCombination(secretComb, attemptCombPlayer);
+			this.evaluationPlayer = evaluateCombination(secretComb, super.attemptCombPlayer);
 			System.out.println("Help : " + this.evaluationPlayer);		
 			
 			//Verif des essais
@@ -158,16 +156,15 @@ public class GameRecherche extends Game {
 	}
 
 
-	/*
-	 * <p> Methode en charge de genere un String piste en faisant la comparaison entre la combinaison saissie 
-	 *  et la combinaison secrete </p>
+	/**
+	 * <p> This method evaluates two combinations getting a result used by the player to guess the secret combination </p>
 	 *  
-	 *  @return La piste en string
+	 *  @return Result Help String
 	 *  
 	 *  @param secretComb
-	 *  	ArrayList contenent la combinaison secrete du jeu
+	 *  	ArrayList of secret combination
 	 *  @param attemptComb
-	 *  	ArrayList contenent la combinaison saisie
+	 *  	ArrayList of attempt combination
 	 * 
 	 */
 	
@@ -185,9 +182,9 @@ public class GameRecherche extends Game {
 		return result.toString();
 	}
 	
-	/*
-	 * <p>Methode de input lorsque le joueur doit lui saisir la piste (il agit comme defenseur) </p>
-	 * @return La piste saisie 
+	/**
+	 * <p>This method allows the user to set the help used by the computer tu guess the secret combination </p>
+	 * @return Help String (>,<,=) 
 	 * @see com.project.game.games.Game#evaluateCombinaisonJoueur()
 	 */
 	@Override
@@ -215,12 +212,12 @@ public class GameRecherche extends Game {
 		return respo;
 	}
 
-	/*
-	 * <p>En base à une piste, cette methode s'occupe de transforme la piste pour obtenir une nouvelle combinaison d'essai </p>
+	/**
+	 * <p>Using help string, this methods calculates another combination</p>
 	 * 
-	 * @return Un nouveau essai
+	 * @return New ArrayList attemp
 	 * @param evaluationPlayer 
-	 * 		La piste obtenu lors de l'essai precedent
+	 * 		Help String
 	 */
 	public ArrayList<Integer> findCombination(String evaluationPlayer) {
 		ArrayList<Integer> combi = new ArrayList<Integer>();

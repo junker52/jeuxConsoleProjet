@@ -8,8 +8,8 @@ import com.project.game.context.ApplicationContext;
 import com.project.game.games.GameMode;
 import com.project.game.games.GameType;
 
-/*<p>
- * Classe en charge de la gestion des menus dans le jeu.
+/**<p>
+ * Class to manage application menus
  *</p> 
  * @author junker52
  */
@@ -19,7 +19,11 @@ public class Menu {
 	private short submenu_option;
 	private ApplicationContext applicationContext;
 	
-	//Constructor par defaut
+	/**
+	 * Contructor to launch the application menus
+	 * @param aplicationContext
+	 * 		Set the ApplicationContext used
+	 */
 	public Menu(ApplicationContext aplicationContext) {
 		this.applicationContext = aplicationContext;
 		this.menu_option = debutMenu();
@@ -42,10 +46,10 @@ public class Menu {
 	
 	//Gestion des menus
 	
-	/*
-	 * Menu de demarrage du jeu
+	/**
+	 * Game starting menu
 	 * 
-	 * @return le jeu choisi
+	 * @return  Chosen game
 	 */
 	public short debutMenu() {
 		short reponse;
@@ -69,10 +73,10 @@ public class Menu {
 		return reponse; 
 	}
 	
-	/*
-	 * Submenu apres le menu de demarrage permettant de choisir le mode
+	/**
+	 * Submenu after starting menu
 	 * 
-	 * @return le mode de jeu choisi
+	 * @return Game Mode
 	 */
 	public short submenu() {
 		short reponse;

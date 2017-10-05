@@ -12,6 +12,11 @@ import com.project.game.games.Game;
 import com.project.game.games.GameMode;
 import com.project.game.games.GameType;
 
+/**
+ * <p>Class to load all of parameters and logger</p>
+ * @author junker52
+ *
+ */
 public class ApplicationContext {
 	
 	private static BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
@@ -23,7 +28,9 @@ public class ApplicationContext {
 	private boolean modeDevelop;
 	private char exitControl = 'N';
 	
-	//Constructor a rellenar
+	/**
+	 * Initial constructor to load all of parameters
+	 */
 	public ApplicationContext() {
 		//Inisialisation des parametres de config
 		readConfigFile();
@@ -32,7 +39,9 @@ public class ApplicationContext {
 		BasicConfigurator.configure();
 	}
 	
-	//Methode pour lire le fichier config
+	/**
+	 * This methods reads the file config.properties to load applpication parameters
+	 */
 	private void readConfigFile() {
 		Properties properties = new Properties();
 		try {
@@ -53,7 +62,10 @@ public class ApplicationContext {
 		}
 	}
 	
-	//Methode pour gerer la sortie du game
+	/**
+	 * Method to control application exit
+	 * @return Control character
+	 */
 	public char exitApplication() {
 		System.out.println("Voulez-vous quitter le game? (O/N)");
 		char resp;

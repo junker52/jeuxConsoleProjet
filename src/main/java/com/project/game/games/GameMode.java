@@ -1,7 +1,7 @@
 package com.project.game.games;
 
-/*
- * Enum pour gerer les 3 modes de jeu
+/**
+ * Enum to manage three game modes
  * 
  * @author junker52
  */
