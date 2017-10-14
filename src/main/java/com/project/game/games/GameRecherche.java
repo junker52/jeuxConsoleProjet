@@ -3,6 +3,8 @@ package com.project.game.games;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import org.apache.log4j.Logger;
+
 import com.project.game.context.ApplicationContext;
 
 /**
@@ -15,6 +17,7 @@ public class GameRecherche extends Game {
 
 	private String evaluationPlayer=" ";
 	private String evaluationComput=" ";
+	public static final Logger log = Logger.getLogger(GameRecherche.class);
 
 	/**
 	 * <p> Constructor for Recherche Game </p>
@@ -50,6 +53,7 @@ public class GameRecherche extends Game {
 		for (int i = 0; i < applicationContext.getNumberOfAttemps(); i++) {
 			super.attemptComb = setAttemptComb();
 			if (!isSecretCobination(attemptComb, secretComb)) {
+				log.info("Evaluating combination...");
 				String avancement = evaluateCombination(secretComb, attemptComb);
 				System.out.println("Help: " + avancement);
 			} else {
@@ -84,6 +88,7 @@ public class GameRecherche extends Game {
 			}
 			this.evaluationPlayer = evaluateCombinationPlayer();
 			System.out.println("Help: " + this.evaluationPlayer);
+			log.info("Finding player combination...");
 			super.attemptComb = this.findCombination(evaluationPlayer);
 			if (i >= applicationContext.getNumberOfAttemps() - 1) {
 				System.out.println("MEC! There are not more attemps! GAME OVER!");
@@ -207,6 +212,7 @@ public class GameRecherche extends Game {
 			}
 		} catch (IOException e) {
 			System.out.println("Invalid evaluation. Retry!");
+			log.error("Error in evaluateCombinationPlayer");
 			respo = evaluateCombinationPlayer();
 		}
 		return respo;

@@ -7,6 +7,9 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.log4j.Logger;
+
+import com.project.game.application.Application;
 import com.project.game.context.ApplicationContext;
 import com.sun.xml.internal.bind.v2.runtime.unmarshaller.XsiNilLoader.Array;
 
@@ -21,6 +24,7 @@ public class GameMastermind extends Game {
 	
 	private Map<String, Integer> help;
 	private List<String> poolOptions = new ArrayList<String>();
+	public static final Logger log = Logger.getLogger(GameMastermind.class);
 	
 	/**
 	 * <p>Constructor to execute the game in one of its different modes</p>
@@ -53,9 +57,10 @@ public class GameMastermind extends Game {
 		}
 		for (int i = 1; i < applicationContext.getNumberOfAttemps(); i++) {
 			System.out.println(this.evaluateCombinationPlayer());
+			log.info("Evaluating combination...");
 			super.attemptCombPlayer = setAttemptComb();
 			if (super.attemptCombPlayer.equals(super.secretComb)) {				
-				System.out.println("BRAVO!! You won in "+(i+1)+" attempts!!");
+				System.out.println("BRAVO!! You won in "+(i+1)+" attempts!!");				
 				break;
 			}
 		}		
@@ -78,6 +83,7 @@ public class GameMastermind extends Game {
 				break;
 			}
 			this.help = GetGuessFromUser();
+			log.info("Reducing options...");
 			this.poolOptions = CleanPoolList(attemptComb, help, poolOptions);
 			super.attemptComb = MoveComputer(poolOptions);	
 			attemp++;
@@ -194,6 +200,7 @@ public class GameMastermind extends Game {
 			guess.put("bad", Integer.valueOf(ApplicationContext.getReader().readLine()));
 		} catch (IOException e) {
 			System.out.println("IO error. Please retry only with numbers.");
+			log.error("Error in method GetGuessFromUser");
 			guess = GetGuessFromUser();
 		}
 		return guess;
@@ -222,6 +229,7 @@ public class GameMastermind extends Game {
 			}
 		} catch (IOException e) {
 			System.out.println("Invalid combination. Retry.");
+			log.error("Error in SetSecretComb");
 			result = SetSecretComb(poolList);
 		}
 		return result;

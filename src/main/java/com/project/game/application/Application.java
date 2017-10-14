@@ -20,11 +20,13 @@ public class Application {
 		applicationContext.setGame(null);
 		Menu menu = new Menu(applicationContext);
 		applicationContext = menu.getApplicationContext();
+		log.info("Starting game: "+applicationContext.getGameType()+" in mode : "+applicationContext.getGameMode());
 		if (applicationContext.getGameType() == GameType.MASTEMIND) {
 			applicationContext.setGame(new GameMastermind(applicationContext));
 		} else if(applicationContext.getGameType() == GameType.RECHERCHE) {
 			applicationContext.setGame(new GameRecherche(applicationContext));
 		}
+		log.info("Game's end!");
 		applicationContext.setExitControl(applicationContext.exitApplication());
 		} while(applicationContext.getExitControl() != 'O' && applicationContext.getExitControl() != 'o');
 
