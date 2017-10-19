@@ -52,17 +52,15 @@ public class GameMastermind extends Game {
 		super.attemptCombPlayer = null;
 		super.secretComb = super.setRandomSecretComb();
 		super.showSolution(super.secretComb);
-		if (super.attemptCombPlayer == null) {
-			super.attemptCombPlayer = setAttemptComb();
-		}
-		for (int i = 1; i < applicationContext.getNumberOfAttemps(); i++) {
-			System.out.println(this.evaluateCombinationPlayer());
-			log.info("Evaluating combination...");
+		for (int i = 0; i < applicationContext.getNumberOfAttemps(); i++) {
 			super.attemptCombPlayer = setAttemptComb();
 			if (super.attemptCombPlayer.equals(super.secretComb)) {				
 				System.out.println("BRAVO!! You won in "+(i+1)+" attempts!!");				
 				break;
 			}
+			log.info("Evaluating combination...");
+			System.out.println(this.evaluateCombinationPlayer());
+			
 		}		
 	}
 
@@ -215,7 +213,7 @@ public class GameMastermind extends Game {
 	 */
 	public ArrayList<Integer> SetSecretComb(List<String> poolList) {		
 		ArrayList<Integer> result = new ArrayList<Integer>();
-		System.out.println("Your secret combination? (5 non-repeated numbers)");
+		System.out.println("Your secret combination? ("+ applicationContext.getNumberOfBox()+" numbers)");
 		try {
 			String secret_temp = ApplicationContext.getReader().readLine();
 			if (secret_temp.length() == applicationContext.getNumberOfBox() && poolList.contains(secret_temp)) {
