@@ -29,19 +29,7 @@ public class Menu {
 		this.menu_option = debutMenu();
 		setApplicationJeuType();
 		this.submenu_option = submenu();
-		switch (submenu_option) {
-		case 1:
-			aplicationContext.setGameMode(GameMode.CHALLENGE);
-			break;
-		case 2:
-			aplicationContext.setGameMode(GameMode.DEFENSE);
-			break;
-			
-		case 3:
-			aplicationContext.setGameMode(GameMode.DUEL);
-			break;
-		}
-		
+		setApplicationJeuMode();		
 	}
 	
 	//Gestion des menus
@@ -132,6 +120,24 @@ public class Menu {
 			applicationContext.setGameType(GameType.RECHERCHE); 
 		} else {
 			applicationContext.setGameType(GameType.MASTEMIND); 
+		}
+	}
+	
+	/**
+	 * This method sets the choosen game mode to applicationContext
+	 */
+	public void setApplicationJeuMode() {
+		switch (submenu_option) {
+		case 1:
+			applicationContext.setGameMode(GameMode.CHALLENGE);
+			break;
+		case 2:
+			applicationContext.setGameMode(GameMode.DEFENSE);
+			break;
+			
+		case 3:
+			applicationContext.setGameMode(GameMode.DUEL);
+			break;
 		}
 	}
 	
