@@ -22,7 +22,6 @@ public class ApplicationContext {
 	private static BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 	private GameMode gameMode;
 	private GameType gameType;
-	private Game game;
 	private int numberOfAttemps;
 	private int numberOfBox;
 	private boolean modeDevelop;
@@ -87,14 +86,6 @@ public class ApplicationContext {
 
 	public void setGameMode(GameMode gameMode) {
 		this.gameMode = gameMode;
-	}
-
-	public Game getGame() {
-		return game;
-	}
-
-	public void setGame(Game game) {
-		this.game = game;
 	}
 
 	public int getNumberOfAttemps() {
