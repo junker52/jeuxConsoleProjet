@@ -154,7 +154,7 @@ public class GameMastermind extends Game {
 		ArrayList attempt_temp = super.attemptCombPlayer;
 		ArrayList secret_temp = (ArrayList) super.getSecretComb().clone();
 		//first well
-		log.info("Init: Attempt: "+attempt_temp+" Secret: "+secret_temp);
+		log.info("Init: Attempt: "+attempt_temp);
 		for (int i = 0; i < attempt_temp.size(); i++) {
 			if (attempt_temp.get(i) == secret_temp.get(i)) {
 				attempt_temp.set(i, "WA");
@@ -173,7 +173,6 @@ public class GameMastermind extends Game {
 				}
 			}
 		}
-		log.info("Fin: Attempt: "+attempt_temp+" Secret: "+secret_temp);
 		return "Well-placed: "+well+" || Bad-placed: "+bad;
 	}
 
