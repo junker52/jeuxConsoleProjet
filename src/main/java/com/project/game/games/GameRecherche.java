@@ -47,14 +47,14 @@ public class GameRecherche extends Game {
 	@Override
 	void executeGameChallenge() {
 		System.out.println("Welcome to Recherche +//- || Mode Challenger");
-		super.secretComb = super.setRandomSecretComb();
-		super.showSolution(super.secretComb);
+		super.setSecretComb(super.setRandomSecretComb());
+		super.showSolution(super.getSecretComb());
 		// D'abord un loop pour les essais
 		for (int i = 0; i < applicationContext.getNumberOfAttemps(); i++) {
 			super.attemptComb = setAttemptComb();
-			if (!isSecretCobination(attemptComb, secretComb)) {
+			if (!isSecretCobination(attemptComb, super.getSecretComb())) {
 				log.info("Evaluating combination...");
-				String avancement = evaluateCombination(secretComb, attemptComb);
+				String avancement = evaluateCombination(super.getSecretComb(), attemptComb);
 				System.out.println("Help: " + avancement);
 			} else {
 				System.out.println("Bravo! You have found the secret combination in " + (i + 1) + " attempts");
@@ -75,14 +75,14 @@ public class GameRecherche extends Game {
 	void executeGameDefense() {
 		super.attemptComb = null;
 		System.out.println("Welcome to Recherche +//-  || Mode Defense");
-		super.secretComb = super.inputSecretComb();
-		super.showSolution(super.secretComb);
+		super.setSecretComb(super.inputSecretComb());
+		super.showSolution(super.getSecretComb());
 		for (int i = 0; i < applicationContext.getNumberOfAttemps(); i++) {
 			if (attemptComb == null) {
 				attemptComb = super.setRandomSecretComb();
 			}
 			System.out.println("The computer attempt is : " + attemptComb);
-			if (super.isSecretCobination(attemptComb, secretComb)) {
+			if (super.isSecretCobination(attemptComb, super.getSecretComb())) {
 				System.out.println("Bravo! You have found the secret combination in " + (i + 1) + " attempts");
 				break;
 			}
@@ -105,12 +105,12 @@ public class GameRecherche extends Game {
 	void executeGameDuel() {
 		System.out.println("Welcome to Recherche +//-  || Mode Duel");
 		//Saisir les combinaisons secretes
-		super.secretComb = super.setRandomSecretComb();
+		super.setSecretComb(super.setRandomSecretComb());
 		super.secretCombPlayer = super.inputSecretComb();
 		//Printer les combis
 		if (applicationContext.isModeDevelop()) {
 			System.out.println("Computer secret combination: ");
-			super.showSolution(secretComb);
+			super.showSolution(super.getSecretComb());
 			System.out.println("Player secret combination:");
 			super.showSolution(secretCombPlayer);
 		}
@@ -140,11 +140,11 @@ public class GameRecherche extends Game {
 			System.out.println("Player goes against the computer combination: ");	
 			System.out.println("Player attempt is: " + super.attemptCombPlayer+"  help: "+evaluationPlayer);
 			super.attemptCombPlayer = super.setAttemptComb();			
-			if (super.isSecretCobination(super.attemptCombPlayer, secretComb)) {
+			if (super.isSecretCobination(super.attemptCombPlayer, getSecretComb())) {
 				System.out.println("Bravo! You have found the secret combination in " + i_joueur + " attempts");
 				break;
 			}
-			this.evaluationPlayer = evaluateCombination(secretComb, super.attemptCombPlayer);
+			this.evaluationPlayer = evaluateCombination(super.getSecretComb(), super.attemptCombPlayer);
 			System.out.println("Help : " + this.evaluationPlayer);		
 			
 			//Verif des essais

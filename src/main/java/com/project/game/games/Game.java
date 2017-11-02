@@ -11,7 +11,7 @@ import com.project.game.context.ApplicationContext;
  */
 public abstract class Game {
 
-	protected ArrayList<Integer> secretComb = new ArrayList<Integer>();
+	private ArrayList<Integer> secretComb = new ArrayList<Integer>();
 	protected ArrayList<Integer> attemptComb = new ArrayList<Integer>();
 	protected ArrayList<Integer> attemptCombPlayer = new ArrayList<Integer>();
 	protected ArrayList<Integer> secretCombPlayer = new ArrayList<Integer>();
@@ -174,5 +174,15 @@ public abstract class Game {
 	 * @return evaluated combination
 	 */
 	abstract String evaluateCombinationPlayer();
+
+	public ArrayList<Integer> getSecretComb() {
+		return secretComb;
+	}
+
+	public void setSecretComb(ArrayList<Integer> secretComb) {
+		this.secretComb = secretComb;
+	}
+	
+	
 
 }

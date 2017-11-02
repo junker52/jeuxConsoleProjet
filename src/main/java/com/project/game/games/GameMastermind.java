@@ -46,15 +46,16 @@ public class GameMastermind extends Game {
 		}
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	void executeGameChallenge() {
 		System.out.println("Bienvenue au Mastermind || Mode Challenge");
 		super.attemptCombPlayer = null;
-		super.secretComb = super.setRandomSecretComb();
-		super.showSolution(super.secretComb);
+		super.setSecretComb(super.setRandomSecretComb());
+		super.showSolution(super.getSecretComb());
 		for (int i = 0; i < applicationContext.getNumberOfAttemps(); i++) {
 			super.attemptCombPlayer = setAttemptComb();
-			if (super.attemptCombPlayer.equals(super.secretComb)) {				
+			if (super.attemptCombPlayer.equals(super.getSecretComb())) {				
 				System.out.println("BRAVO!! You won in "+(i+1)+" attempts!!");				
 				break;
 			}
@@ -101,12 +102,12 @@ public class GameMastermind extends Game {
 		this.poolOptions = GetAllPossibleSolutions();
 		super.secretCombPlayer = SetSecretComb(poolOptions);
 		//PC chooses the secret combination for player
-		super.secretComb = super.setRandomSecretComb();
+		super.setSecretComb(super.setRandomSecretComb());
 		//Showing secret combinations if it's necessary
 		System.out.println("Player:");
 		super.showSolution(super.secretCombPlayer);
 		System.out.println("PC:");
-		super.showSolution(super.secretComb);
+		super.showSolution(super.getSecretComb());
 		//Starting counters...
 		int count_player = 1; int count_pc = 1;
 		while (count_pc < applicationContext.getNumberOfAttemps() 
@@ -116,7 +117,7 @@ public class GameMastermind extends Game {
 				System.out.println("Player goes with its last try: "+attemptCombPlayer);
 			}
 			super.attemptCombPlayer = setAttemptComb();
-			if (super.attemptCombPlayer.equals(super.secretComb)) {				
+			if (super.attemptCombPlayer.equals(super.getSecretComb())) {				
 				System.out.println("BRAVO!! You won in "+count_player+" attempts!!");
 				break;
 			}
@@ -149,19 +150,30 @@ public class GameMastermind extends Game {
 
 	@Override
 	String evaluateCombinationPlayer() {
-		int well = 0; int bad = 0; int atcompare;	
-		for (int i = 0; i < super.attemptCombPlayer.size(); i++) {
-			atcompare = attemptCombPlayer.get(i);
-			for (int j = 0; j < secretComb.size(); j++) {
-				if (atcompare == secretComb.get(j)) {
-					if (i == j) {
-						well++;
-					} else {
-						bad++;
-					}
-				} 
+		int well = 0; int bad = 0;
+		ArrayList attempt_temp = super.attemptCombPlayer;
+		ArrayList secret_temp = (ArrayList) super.getSecretComb().clone();
+		//first well
+		log.info("Init: Attempt: "+attempt_temp+" Secret: "+secret_temp);
+		for (int i = 0; i < attempt_temp.size(); i++) {
+			if (attempt_temp.get(i) == secret_temp.get(i)) {
+				attempt_temp.set(i, "WA");
+				secret_temp.set(i, "WS");
+				well++;
 			}
 		}
+		
+		//Then bad
+		for (int i = 0; i < attempt_temp.size(); i++) {
+			for (int j = 0; j < secret_temp.size(); j++) {
+				if (attempt_temp.get(i) instanceof Integer && secret_temp.get(j) instanceof Integer) {
+					if (attempt_temp.get(i) == secret_temp.get(j) && i != j) {
+						bad++;
+					}
+				}
+			}
+		}
+		log.info("Fin: Attempt: "+attempt_temp+" Secret: "+secret_temp);
 		return "Well-placed: "+well+" || Bad-placed: "+bad;
 	}
 
