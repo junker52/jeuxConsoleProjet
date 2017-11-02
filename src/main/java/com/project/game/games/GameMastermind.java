@@ -103,10 +103,13 @@ public class GameMastermind extends Game {
 		//PC chooses the secret combination for player
 		super.setSecretComb(super.setRandomSecretComb());
 		//Showing secret combinations if it's necessary
-		System.out.println("Player:");
-		super.showSolution(super.secretCombPlayer);
-		System.out.println("PC:");
-		super.showSolution(super.getSecretComb());
+		if (applicationContext.isModeDevelop()) {
+			System.out.println("Player:");
+			super.showSolution(super.secretCombPlayer);
+			System.out.println("PC:");
+			super.showSolution(super.getSecretComb());
+		}
+		
 		//Starting counters...
 		int count_player = 1; int count_pc = 1;
 		while (count_pc < applicationContext.getNumberOfAttemps() 
@@ -133,7 +136,7 @@ public class GameMastermind extends Game {
 				break;
 			}
 			this.help = GetGuessFromUser();
-			System.out.println(poolOptions.size());
+			log.info("Reducing options to "+this.poolOptions.size());
 			this.poolOptions = CleanPoolList(attemptComb, help, poolOptions);
 			count_pc++;
 		}
