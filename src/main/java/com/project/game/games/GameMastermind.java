@@ -81,16 +81,15 @@ public class GameMastermind extends Game {
 				System.out.println("Game Over. No more attempts. PC loses!");
 				break;
 			}
-			this.help = GetGuessFromUser();
-			log.info("Reducing options...");
+			this.help = GetGuessFromUser();			
 			this.poolOptions = CleanPoolList(attemptComb, help, poolOptions);
+			log.info("Reducing options to "+this.poolOptions.size());
 			super.attemptComb = MoveComputer(poolOptions);	
 			attemp++;
-		}
-		if (super.attemptComb.equals(secretCombPlayer)) {
-			System.out.println("Computer has found your combination!!");
-		} 
-		
+			if (super.attemptComb.equals(secretCombPlayer)) {
+				System.out.println("Computer has found your combination in "+attemp+" attempts!!");
+			} 
+		}		
 	}
 
 	@Override
@@ -151,7 +150,7 @@ public class GameMastermind extends Game {
 	@Override
 	String evaluateCombinationPlayer() {
 		int well = 0; int bad = 0;
-		ArrayList attempt_temp = super.attemptCombPlayer;
+		ArrayList attempt_temp = (ArrayList) super.attemptCombPlayer.clone();
 		ArrayList secret_temp = (ArrayList) super.getSecretComb().clone();
 		//first well
 		log.info("Init: Attempt: "+attempt_temp);
@@ -207,7 +206,7 @@ public class GameMastermind extends Game {
 			guess.put("well", Integer.valueOf(ApplicationContext.getReader().readLine()));
 			System.out.println("bad-placed");
 			guess.put("bad", Integer.valueOf(ApplicationContext.getReader().readLine()));
-		} catch (IOException e) {
+		} catch (Exception e) {
 			System.out.println("IO error. Please retry only with numbers.");
 			log.error("Error in method GetGuessFromUser");
 			guess = GetGuessFromUser();
