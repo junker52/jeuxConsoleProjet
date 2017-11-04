@@ -152,7 +152,7 @@ public class GameMastermind extends Game {
 
 	@Override
 	String evaluateCombinationPlayer() {
-		int well = 0; int bad = 0;
+		int well = 0; int bad = 0; int comparedNumber;
 		ArrayList attempt_temp = (ArrayList) super.attemptCombPlayer.clone();
 		ArrayList secret_temp = (ArrayList) super.getSecretComb().clone();
 		//first well
@@ -169,8 +169,23 @@ public class GameMastermind extends Game {
 		for (int i = 0; i < attempt_temp.size(); i++) {
 			for (int j = 0; j < secret_temp.size(); j++) {
 				if (attempt_temp.get(i) instanceof Integer && secret_temp.get(j) instanceof Integer) {
-					if (attempt_temp.get(i) == secret_temp.get(j) && i != j) {
+					if (attempt_temp.get(i) == secret_temp.get(j) && i != j && attempt_temp.lastIndexOf(attempt_temp.get(i)) == i) {
 						bad++;
+					//Correction for doubled bad-placed numbers counting
+					} else if (attempt_temp.get(i) == secret_temp.get(j) && i != j && attempt_temp.lastIndexOf(attempt_temp.get(i)) > i) {
+						Integer compareNum = (Integer) attempt_temp.get(i); 
+						Integer compareWithNum;
+						for (int k = 0; k < attempt_temp.size(); k++) {
+							if (attempt_temp.get(k) instanceof Integer) {
+								compareWithNum = (Integer) attempt_temp.get(k);
+								if (compareNum.intValue() == compareWithNum.intValue()) {
+									log.info(compareWithNum.intValue()+" is a doubled bad-placed");
+									attempt_temp.set(k, "DB");
+									bad++;
+								}
+							}
+						}
+						
 					}
 				}
 			}
