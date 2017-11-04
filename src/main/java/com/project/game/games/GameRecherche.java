@@ -137,8 +137,11 @@ public class GameRecherche extends Game {
 			super.attemptComb = this.findCombination(evaluationComput);			
 			
 			//Ensuite, c'est le joueur qui devine la combinaison du pc
-			System.out.println("Player goes against the computer combination: ");	
-			System.out.println("Player attempt is: " + super.attemptCombPlayer+"  help: "+evaluationPlayer);
+			System.out.println("Player goes against the computer combination: ");
+			//Correction: not null variable displayed
+			if (super.attemptCombPlayer != null) {
+				System.out.println("Player attempt is: " + super.attemptCombPlayer+"  help: "+evaluationPlayer);
+			}
 			super.attemptCombPlayer = super.setAttemptComb();			
 			if (super.isSecretCobination(super.attemptCombPlayer, getSecretComb())) {
 				System.out.println("Bravo! You have found the secret combination in " + i_joueur + " attempts");
@@ -199,6 +202,11 @@ public class GameRecherche extends Game {
 		try {
 			boolean verif_string = true;
 			respo = (String) ApplicationContext.getReader().readLine();
+			//Input size control added
+			if (respo.length() != applicationContext.getNumberOfBox()) {
+				System.out.println("Retry with "+applicationContext.getNumberOfBox()+" characters.");
+				respo = this.evaluateCombinationPlayer();
+			}
 			StringBuffer sb = new StringBuffer(respo);
 			for (int i = 0; i < applicationContext.getNumberOfBox(); i++) {
 				if (sb.charAt(i) != '>' && sb.charAt(i) != '<' && sb.charAt(i) != '=') {
