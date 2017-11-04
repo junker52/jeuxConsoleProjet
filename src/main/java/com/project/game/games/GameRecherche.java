@@ -83,7 +83,7 @@ public class GameRecherche extends Game {
 			}
 			System.out.println("The computer attempt is : " + attemptComb);
 			if (super.isSecretCobination(attemptComb, super.getSecretComb())) {
-				System.out.println("Bravo! You have found the secret combination in " + (i + 1) + " attempts");
+				System.out.println("Bravo! PC has found the secret combination in " + (i + 1) + " attempts");
 				break;
 			}
 			this.evaluationPlayer = evaluateCombinationPlayer();
