@@ -2,6 +2,8 @@ package com.project.game.games;
 
 import java.util.ArrayList;
 
+import org.apache.log4j.Logger;
+
 import com.project.game.context.ApplicationContext;
 
 /**
@@ -16,6 +18,7 @@ public abstract class Game {
 	protected ArrayList<Integer> attemptCombPlayer = new ArrayList<Integer>();
 	protected ArrayList<Integer> secretCombPlayer = new ArrayList<Integer>();
 	protected ApplicationContext applicationContext;
+	public static final Logger log = Logger.getLogger(Game.class);
 
 	public Game(ApplicationContext applicationContext) {
 		this.applicationContext = applicationContext;
@@ -59,6 +62,7 @@ public abstract class Game {
 	public void showSolution(ArrayList<Integer> array) {
 		// Gestion du mode developpeur
 		if (applicationContext.isModeDevelop()) {
+			log.info("Developer mode is On.");
 			System.out.println("Secret Combination is: "+array.toString() + " \n");
 		}
 	}

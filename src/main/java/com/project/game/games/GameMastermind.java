@@ -179,7 +179,6 @@ public class GameMastermind extends Game {
 							if (attempt_temp.get(k) instanceof Integer) {
 								compareWithNum = (Integer) attempt_temp.get(k);
 								if (compareNum.intValue() == compareWithNum.intValue()) {
-									log.info(compareWithNum.intValue()+" is a doubled bad-placed");
 									attempt_temp.set(k, "DB");
 									bad++;
 								}
