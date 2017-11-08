@@ -123,6 +123,12 @@ public class ApplicationContext {
 	public void setExitControl(char exitControl) {
 		this.exitControl = exitControl;
 	}
+
+	public void setModeDevelop(boolean modeDevelop) {
+		this.modeDevelop = modeDevelop;
+	}
+	
+	
 	
 	
 	

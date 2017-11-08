@@ -20,6 +20,16 @@ public class Application {
 
 		//Starting point of the game! Enjoy!
 		ApplicationContext applicationContext = new ApplicationContext();
+		//Checking if there are command-line parameters
+		if (args.length == 1) {
+			if (args[0].equalsIgnoreCase("true")) {
+				log.info("Developer mode activated by command line parameter");
+				applicationContext.setModeDevelop(true);
+			} else if (args[0].equalsIgnoreCase("false")) {
+				log.info("Developer mode disabled by command line parameter");
+				applicationContext.setModeDevelop(false);
+			}
+		}
 		do {
 		Menu menu = new Menu(applicationContext);
 		applicationContext = menu.getApplicationContext();
