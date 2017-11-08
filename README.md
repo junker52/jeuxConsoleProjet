@@ -21,4 +21,11 @@ Clone the repository!
 https://github.com/junker52/jeuxConsoleProjet.git
 ```
 
-Enjoy it!
+
+OPTIONAL: Activate or disable developer mode:
+
+```
+Run > Run Configurations > Arguments > Program Arguments: true || false
+```
+
+Run it and Enjoy! =)
